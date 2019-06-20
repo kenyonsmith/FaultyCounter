@@ -22,7 +22,7 @@ namespace FaultyCounter
 {
     class Program
     {
-        const int MaxPIndex = 3;
+        const int MaxPIndex = 4;
         static Process newProc;
         static int pIndex;
         static int childPIndex;
@@ -181,7 +181,7 @@ namespace FaultyCounter
                         StartChildProcess();
                     } else
                     {
-                        sleepTime *= 2;     // Double sleep time to free up CPU
+                        sleepTime = Math.Min(sleepTime * 2, 2000);     // Double sleep time to free up CPU
                     }
                 }
                 if (pIndex == MaxPIndex)
@@ -195,7 +195,7 @@ namespace FaultyCounter
                             count++;
                             SendCount();
 
-                            if (count == MaxCount)
+                            if (count >= MaxCount)
                             {
                                 StreamWriter writer = new StreamWriter("FinalComputationResult.txt");
                                 writer.WriteLine(count);
